@@ -1,9 +1,10 @@
 NUMBERS = "1234567890"
-OPERATORS = "x/+-"  # In order of priority
+MULTIPLICATION_OPERATORS = "x/"
+ADDITION_OPERATORS = "+-"
 
 
 def calculate(expression):
-    while have_strings_any_common_characters(expression, OPERATORS):
+    while have_strings_any_common_characters(expression, MULTIPLICATION_OPERATORS + ADDITION_OPERATORS):
         highest_priority_expression = get_expression_around_operator(expression,
                                                                      get_highest_priority_operator_index(expression))
         result = calculate_simple_expression(highest_priority_expression)
@@ -12,9 +13,13 @@ def calculate(expression):
 
 
 def get_highest_priority_operator_index(expression):
-    for operator in OPERATORS:
-        if operator in expression:
-            return expression.index(operator)
+    for ch in expression:
+        if ch in MULTIPLICATION_OPERATORS:
+            return expression.index(ch)
+
+    for ch in expression:
+        if ch in ADDITION_OPERATORS:
+            return expression.index(ch)
 
 
 def get_expression_around_operator(expression, index):
